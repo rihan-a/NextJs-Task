@@ -6,6 +6,7 @@ export default function Home() {
   const [categories, setCategories] = useState([]);
   const [parentCategoryId, setParentCategoryId] = useState(0);
   const [subCategories, setSubCategories] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleMainCategory = (event) => {
     setParentCategoryId(event.target.value);
@@ -14,6 +15,7 @@ export default function Home() {
 
   // fetch categories data 
   useEffect(() => {
+    setLoading(true);
     async function fetchCategories() {
       try {
         const response = await fetch(
@@ -22,6 +24,7 @@ export default function Home() {
         const data = await response.json();
         //console.log(data);
         setCategories(data);
+        setLoading(false);
       } catch (error) {
         console.log("Error", error);
       }
@@ -43,6 +46,11 @@ export default function Home() {
     }
   }, [parentCategoryId, categories]);
 
+
+  if (loading) {
+    return <h4>Loading . . .</h4>;
+  }
+
   return (
     <main className={styles.main}>
       <div className={styles.mainContainer}>
@@ -59,7 +67,7 @@ export default function Home() {
         <h4>Sub Category</h4>
 
         <select className={styles.select}>
-          <option>Select Sub-category</option>
+          {subCategories.length > 0 && <option>Select Sub-category</option>}
           {subCategories.map((category) => {
             return <option key={category.id} >{category.name}</option>;
           })}
