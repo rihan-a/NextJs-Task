@@ -43,7 +43,6 @@ export default function Home() {
     }
   }, [parentCategoryId, categories]);
 
-
   return (
     <main className={styles.main}>
       <div className={styles.mainContainer}>
@@ -61,6 +60,9 @@ export default function Home() {
 
         <select className={styles.select}>
           <option>Select Sub-category</option>
+          {subCategories.map((category) => {
+            return <option key={category.id} >{category.name}</option>;
+          })}
         </select>
 
       </div>
