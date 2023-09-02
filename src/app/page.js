@@ -5,13 +5,12 @@ import styles from './page.module.css';
 export default function Home() {
   const [categories, setCategories] = useState([]);
   const [parentCategoryId, setParentCategoryId] = useState(0);
-
+  const [subCategories, setSubCategories] = useState([]);
 
   const handleMainCategory = (event) => {
     setParentCategoryId(event.target.value);
     console.log(event.target.value);
   };
-
 
   // fetch categories data 
   useEffect(() => {
@@ -29,6 +28,21 @@ export default function Home() {
     }
     fetchCategories();
   }, []);
+
+
+  //get selected sub categories using the selected parent Id 
+  useEffect(() => {
+    if (parentCategoryId) {
+      const selectedCategory = categories.filter((category) => category.id == parentCategoryId);
+      if (selectedCategory && selectedCategory[0].children) {
+        console.log(selectedCategory[0].children);
+        setSubCategories(selectedCategory[0].children);
+      }
+    } else {
+      setSubCategories([]);
+    }
+  }, [parentCategoryId, categories]);
+
 
   return (
     <main className={styles.main}>
