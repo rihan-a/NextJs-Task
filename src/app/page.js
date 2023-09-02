@@ -4,6 +4,7 @@ import styles from './page.module.css';
 
 export default function Home() {
   const [categories, setCategories] = useState([]);
+  const [parentCategoryId, setParentCategoryId] = useState(0);
 
   // fetch categories data 
   useEffect(() => {
@@ -27,10 +28,10 @@ export default function Home() {
       <div className={styles.mainContainer}>
         <h2>Multi-Level Forms task:</h2>
         <h4>Parent Category</h4>
-        <select className={styles.select}>
+        <select value={parentCategoryId} className={styles.select}>
           <option>Select Parent Category</option>;
           {categories.map((category) => {
-            return <option key={category.id}>{category.name}</option>;
+            return <option key={category.id} value={category.id}>{category.name}</option>;
           })}
         </select>
         <h4>Sub Category</h4>
