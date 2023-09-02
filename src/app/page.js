@@ -1,6 +1,27 @@
+'use client';
+import { useEffect } from 'react';
 import styles from './page.module.css';
 
+
+
 export default function Home() {
+
+  // fetch categories data 
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const response = await fetch(
+          "api/categories"
+        );
+        const data = await response.json();
+        console.log(data);
+      } catch (error) {
+        console.log("Error", error);
+      }
+    }
+    fetchCategories();
+  }, []);
+
   return (
     <main className={styles.main}>
       <div className={styles.mainContainer}>
